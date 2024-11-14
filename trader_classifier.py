@@ -11,7 +11,7 @@ with open('api_key.txt', 'r') as file:
 
 
 """Initialize Flipside with your API Key / API Url"""
-flipside = Flipside("<YOUR_API_KEY>", "https://api-v2.flipsidecrypto.xyz")
+flipside = Flipside(api_key, "https://api-v2.flipsidecrypto.xyz")
 
 sql = """WITH RECURSIVE date_series AS (
   SELECT
@@ -349,5 +349,6 @@ def auto_paginate_result(query_result_set, page_size=10000):
 
 trader_classifier = auto_paginate_result(query_result_set)
 trader_classifier = pd.DataFrame(trader_classifier)
+print(trader_classifier.head())
 
 
