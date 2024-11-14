@@ -1,0 +1,33 @@
+name: flipside
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - setuptools
+  - wheel
+  - zlib
+  - xz
+  - tk
+  - sqlite
+  - openssl
+  - libffi
+  - ca-certificates
+  - bzip2
+
+  - pip:
+      - certifi==2023.7.22
+      - charset-normalizer==3.2.0
+      - flipside==2.0.8
+      - idna==3.4
+      - numpy==1.25.2
+      - pandas==2.1.0
+      - plotly==5.16.1
+      - pydantic==1.10.9
+      - pytz==2023.3.post1
+      - requests==2.29.0
+      - tenacity==8.2.3
+      - typing-extensions==4.7.1
+      - tzdata==2023.3
+      - urllib3==1.26.16
+prefix: C:\Users\crmer\miniconda3\envs\flipside
