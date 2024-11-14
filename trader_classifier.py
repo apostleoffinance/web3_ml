@@ -347,6 +347,9 @@ def auto_paginate_result(query_result_set, page_size=10000):
 trader_classifier = auto_paginate_result(query_result_set)
 trader_classifier_df = pd.DataFrame(trader_classifier)
 
+# Set the display option to show all columns
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', 1000)  # Adjusts the display width for better visibility
 
 #Display Dataframe
 print(trader_classifier_df.head())
