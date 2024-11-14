@@ -319,7 +319,7 @@ FROM
 """
 """Run the query against Flipside's query engine and await the results"""
 query_result_set = flipside.query(sql)
-print(query_result_set)
+#print(query_result_set)
 
 """This function will be added to Flipside package after testing, just copy/paste as needed for now"""
 def auto_paginate_result(query_result_set, page_size=10000):
@@ -337,18 +337,18 @@ def auto_paginate_result(query_result_set, page_size=10000):
             page_number=current_page,
             page_size=page_size
         )
-
         if results.records:
             all_rows.extend(results.records)  # Use extend() to add list elements
-
         current_page += 1  # Increment the current page number
-
     return all_rows  # Return all_rows in JSON format
 
 """ Get your data as a pandas data frame"""
 
 trader_classifier = auto_paginate_result(query_result_set)
-trader_classifier = pd.DataFrame(trader_classifier)
-print(trader_classifier.head())
+trader_classifier_df = pd.DataFrame(trader_classifier)
+
+
+#Display Dataframe
+print(trader_classifier_df.head())
 
 
