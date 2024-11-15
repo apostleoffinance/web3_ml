@@ -345,13 +345,51 @@ def auto_paginate_result(query_result_set, page_size=10000):
 """ Get your data as a pandas data frame"""
 
 trader_classifier = auto_paginate_result(query_result_set)
-trader_classifier_df = pd.DataFrame(trader_classifier)
+df = pd.DataFrame(trader_classifier)
 
 # Set the display option to show all columns
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)  # Adjusts the display width for better visibility
 
 #Display Dataframe
-print(trader_classifier_df.head())
+#print(df.head())
 
+#Drop the "__row_index" column
+df_t = df.drop(columns = ['__row_index'])
 
+# Convert 'day' column to datetime format and remove time component 
+df_t['day'] = pd.to_datetime(df_t['day'], errors='coerce').dt.date
+
+# Remove outliers from 'portfolio_return' column based on IQR method
+def remove_outliers_iqr(df_t, column):
+    Q1 = df_t[column].quantile(0.25)
+    Q3 = df_t[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    return df_t[(df_t[column] >= lower_bound) & (df_t[column] <= upper_bound)]
+
+# Apply the function to remove outliers from the 'portfolio_return' column
+df_clean = remove_outliers_iqr(df_t, 'portfolio_return')
+
+# Verify the result
+#print(df_clean)
+
+#Handling NaN values
+
+#drop rows in trader_class column with NaN values
+df_cleann = df_clean.dropna(subset=['trader_class'])
+#Fill NaN with 0
+df_cleaned = df_cleann.fillna(0)
+
+#Datatypes
+
+#convert day to datetime
+df_cleaned['day'] = pd.to_datetime(df_cleaned['day'])
+
+# Convert 'trader_class' to a categorical column
+df_cleaned["trader_class"] = df_cleaned["trader_class"].astype('category')
+# Assign unique integers to categories
+df_cleaned['trader_class_numeric'] = df_cleaned['trader_class'].astype('category').cat.codes
+
+df_cleaned.head()
