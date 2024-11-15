@@ -348,8 +348,8 @@ trader_classifier = auto_paginate_result(query_result_set)
 df = pd.DataFrame(trader_classifier)
 
 # Set the display option to show all columns
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', 1000)  # Adjusts the display width for better visibility
+# pd.set_option('display.max_columns', None)
+# pd.set_option('display.width', 1000)  # Adjusts the display width for better visibility
 
 #Display Dataframe
 #print(df.head())
@@ -373,7 +373,7 @@ def remove_outliers_iqr(df_t, column):
 df_clean = remove_outliers_iqr(df_t, 'portfolio_return')
 
 # Verify the result
-#print(df_clean)
+#print(df_clean.head())
 
 #Handling NaN values
 
@@ -392,4 +392,4 @@ df_cleaned["trader_class"] = df_cleaned["trader_class"].astype('category')
 # Assign unique integers to categories
 df_cleaned['trader_class_numeric'] = df_cleaned['trader_class'].astype('category').cat.codes
 
-df_cleaned.head()
+print(df_cleaned.head())
