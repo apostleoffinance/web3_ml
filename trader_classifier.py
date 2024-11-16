@@ -2,6 +2,12 @@ from flipside import Flipside
 import numpy as np
 import pandas as pd 
 import plotly.graph_objects as go
+import random
+import os
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_scoreroc_curve, roc_auc_score
 
 """ This repo GITIGNORES api_key.txt, use this convention to store your key safely"""
 
@@ -393,3 +399,50 @@ df_cleaned["trader_class"] = df_cleaned["trader_class"].astype('category')
 df_cleaned['trader_class_numeric'] = df_cleaned['trader_class'].astype('category').cat.codes
 
 print(df_cleaned.head())
+
+# Correlation Coefficient Analysis
+
+df_cor = df_cleaned.corr(numeric_only=True)
+print(df_cor['trader_class_numeric'].sort_values(ascending=False))
+
+#numeric
+numeric = df_cleaned.select_dtypes(include=['number'])
+
+features = ['base_cumulative_return', 'portfolio_return', 
+            'daily_sharpe_ratio', 'number_of_trades', 'unique_tokens_traded']
+
+target = 'trader_class_numeric'
+
+#Data Processing
+#Separating the features from the target variable.
+
+X = df_cleaned[features]
+y = df_cleaned[target]
+
+#Normalize the Features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+#Split the data into training and testing sets.
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
+#Train the logistic Regression Model
+log_reg = LogisticRegression()
+log_reg.fit(X_train, y_train)
+
+#predict on the test set
+y_pred = log_reg.predict(X_test)
+
+#Evaluate the model
+#Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
+
+# Calculate AUROC
+# Get predicted probabilities for all classes
+y_pred_multi = log_reg.predict_proba(X_test)
+
+# Calculate AUROC for multi-class classification
+auroc_multi = roc_auc_score(y_test, y_pred_multi, multi_class='ovr')
+print(f"Area Under the ROC Curve (AUROC) for Multi-Class: {auroc_multi:.2f}")
