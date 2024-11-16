@@ -7,7 +7,9 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_scoreroc_curve, roc_auc_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import roc_curve, roc_auc_score
+
 
 """ This repo GITIGNORES api_key.txt, use this convention to store your key safely"""
 
