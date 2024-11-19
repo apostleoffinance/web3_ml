@@ -435,16 +435,19 @@ log_reg.fit(X_train, y_train)
 #predict on the test set
 y_pred = log_reg.predict(X_test)
 
-#Evaluate the model
-#Confusion Matrix
-cm = confusion_matrix(y_test, y_pred)
-print("Confusion Matrix:")
-print(cm)
+# Model Accuracy, how often is the classifier correct?
+print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
 
-# Calculate AUROC
-# Get predicted probabilities for all classes
-y_pred_multi = log_reg.predict_proba(X_test)
+# #Evaluate the model
+# #Confusion Matrix
+# cm = confusion_matrix(y_test, y_pred)
+# print("Confusion Matrix:")
+# print(cm)
 
-# Calculate AUROC for multi-class classification
-auroc_multi = roc_auc_score(y_test, y_pred_multi, multi_class='ovr')
-print(f"Area Under the ROC Curve (AUROC) for Multi-Class: {auroc_multi:.2f}")
+# # Calculate AUROC
+# # Get predicted probabilities for all classes
+# y_pred_multi = log_reg.predict_proba(X_test)
+
+# # Calculate AUROC for multi-class classification
+# auroc_multi = roc_auc_score(y_test, y_pred_multi, multi_class='ovr')
+# print(f"Area Under the ROC Curve (AUROC) for Multi-Class: {auroc_multi:.2f}")
