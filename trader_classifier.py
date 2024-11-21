@@ -19,11 +19,6 @@ df.columns = df.columns.str.lower().str.replace(' ', '_')
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)  # Adjusts the display width for better visibility
 
-#Display Dataframe
-#print(df.head())
-
-#Drop the "__row_index" column
-#df_t = df.drop(columns = ['__row_index'])
 
 # Convert 'day' column to datetime format and remove time component 
 df['day'] = pd.to_datetime(df['day'], errors='coerce').dt.date
@@ -40,10 +35,6 @@ def remove_outliers_iqr(df, column):
 # Apply the function to remove outliers from the 'portfolio_return' column
 df_clean = remove_outliers_iqr(df, 'portfolio_return')
 
-# Verify the result
-#print(df_clean.head())
-
-#Handling NaN values
 
 #drop rows in trader_class column with NaN values
 df_cleann = df_clean.dropna(subset=['trader_class'])
