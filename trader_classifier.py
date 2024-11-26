@@ -88,8 +88,6 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 #Save the Model
-import pickle
-
 model_file = 'logistic_regression_model.bin'
 model_file
 
