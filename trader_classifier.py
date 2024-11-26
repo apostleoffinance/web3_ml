@@ -90,18 +90,18 @@ y_pred = log_reg.predict(X_test)
 # Model Accuracy, how often is the classifier correct?
 #print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
 
-# Save the model to a pickle file
-with open('logistic_regression_model.pkl', 'wb') as file:
-    pickle.dump(log_reg, file)
+# # Save the model to a pickle file
+# with open('logistic_regression_model.pkl', 'wb') as file:
+#     pickle.dump(log_reg, file)
 
-print("Model saved as 'logistic_regression_model.pkl'")
+# print("Model saved as 'logistic_regression_model.pkl'")
 
-# Load the model
-with open('logistic_regression_model.pkl', 'rb') as file:
-    loaded_model = pickle.load(file)
+# # Load the model
+# with open('logistic_regression_model.pkl', 'rb') as file:
+#     loaded_model = pickle.load(file)
 
-# Use the model for predictions
-y_pred = loaded_model.predict(X_test)
-print("Predictions made successfully!")
+# # Use the model for predictions
+# y_pred = loaded_model.predict(X_test)
+# print("Predictions made successfully!")
 
 
