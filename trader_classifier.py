@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import random
 import os
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -87,6 +88,12 @@ log_reg.fit(X_train, y_train)
 y_pred = log_reg.predict(X_test)
 
 # Model Accuracy, how often is the classifier correct?
-print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+#print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+
+# Save the model to a pickle file
+with open('logistic_regression_model.pkl', 'wb') as file:
+    pickle.dump(log_reg, file)
+
+print("Model saved as 'logistic_regression_model.pkl'")
 
 
