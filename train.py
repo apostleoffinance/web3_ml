@@ -10,6 +10,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.metrics import roc_curve, roc_auc_score
 
+model_file = 'logistic_regression_model.bin'
+
 """ Get your data as a pandas data frame"""
 
 df = pd.read_csv('traderclassifier.csv')
@@ -87,14 +89,7 @@ model.fit(X_train, y_train)
 #predict on the test set
 y_pred = model.predict(X_test)
 
-#Save the Model
-model_file = 'logistic_regression_model.bin'
-model_file
-
-f_out = open(model_file, 'wb')
-pickle.dump((model), f_out)
-f_out.close()
-
+# Save the Model
 # Save the trained model to a .bin file
 
 with open(model_file, 'wb') as f_out:
