@@ -96,4 +96,12 @@ with open('logistic_regression_model.pkl', 'wb') as file:
 
 print("Model saved as 'logistic_regression_model.pkl'")
 
+# Load the model
+with open('logistic_regression_model.pkl', 'rb') as file:
+    loaded_model = pickle.load(file)
+
+# Use the model for predictions
+y_pred = loaded_model.predict(X_test)
+print("Predictions made successfully!")
+
 
