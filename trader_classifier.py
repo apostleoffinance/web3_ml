@@ -81,27 +81,28 @@ X_scaled = scaler.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
 #Train the logistic Regression Model
-log_reg = LogisticRegression()
-log_reg.fit(X_train, y_train)
+model = LogisticRegression()
+model.fit(X_train, y_train)
 
 #predict on the test set
-y_pred = log_reg.predict(X_test)
+y_pred = model.predict(X_test)
 
-# Model Accuracy, how often is the classifier correct?
-#print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+#Save the Model
+import pickle
 
-# # Save the model to a pickle file
-# with open('logistic_regression_model.pkl', 'wb') as file:
-#     pickle.dump(log_reg, file)
+model_file = 'logistic_regression_model.bin'
+model_file
 
-# print("Model saved as 'logistic_regression_model.pkl'")
+f_out = open(model_file, 'wb')
+pickle.dump((model), f_out)
+f_out.close()
 
-# # Load the model
-# with open('logistic_regression_model.pkl', 'rb') as file:
-#     loaded_model = pickle.load(file)
+# Save the trained model to a .bin file
 
-# # Use the model for predictions
-# y_pred = loaded_model.predict(X_test)
-# print("Predictions made successfully!")
+with open(model_file, 'wb') as f_out:
+    pickle.dump(model, f_out)
+
+print(f"Model saved to {model_file}")
+
 
 
