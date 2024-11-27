@@ -29,6 +29,11 @@ X = scaler.fit_transform(trader_values)
 def predict(trader):
     trader_scaled = scaler.transform(X)
     y_pred = model.predict_proba(trader_scaled)
+
+    result = {
+        'Prediction Probabilities': y_pred
+
+    }
     return y_pred
 
 
