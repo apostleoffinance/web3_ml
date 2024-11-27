@@ -1,7 +1,7 @@
 import pickle
 from sklearn.preprocessing import StandardScaler
 from flask import Flask
-from flask import request
+from flask import request, jsonify
 
 model_file = 'logistic_regression_model.bin'
 
@@ -16,31 +16,24 @@ def predict():
     # json = Python dictionary
     trader = request.get_json()
 
+    # Ensure the input data is in the correct format for the scaler and model
     X = scaler.transform([trader])
-    model.predict_proba(X)
-    y_pred = model.predict_proba(X)
 
+    # Get the probability of each class
+    probabilities = model.predict_proba(X)[0]
 
-# # Create a list of values in the correct order
+     # Get the predicted class
+    y_pred = model.predict_proba(X)[0]
 
-
-
-
-
-def predict(trader):
-   
-
-    result = {
-        'Prediction Probabilities': y_pred
-
+    # Format the response with probabilities and predicted class
+    response = {
+        'predicted_class': int(y_pred),  # Cast to int for JSON serialization
+        'probabilities': probabilities.tolist()  # Convert NumPy array to list for JSON serialization
     }
-    return y_pred
+
+    return jsonify(response)
 
 
-
-
-def ping():
-    return "PONG"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9696)
