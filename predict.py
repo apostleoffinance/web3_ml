@@ -27,8 +27,8 @@ def predict():
 
     # Format the response with probabilities and predicted class
     response = {
-        'predicted_class': int(y_pred),  # Cast to int for JSON serialization
-        'probabilities': probabilities.tolist()  # Convert NumPy array to list for JSON serialization
+        'predicted_class': float(y_pred),  # Cast to int for JSON serialization
+        'probabilities': probabilities  # Convert NumPy array to list for JSON serialization
     }
 
     return jsonify(response)
