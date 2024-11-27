@@ -93,7 +93,7 @@ y_pred = model.predict(X_test)
 # Save the trained model to a .bin file
 
 with open(model_file, 'wb') as f_out:
-    pickle.dump(model, f_out)
+    pickle.dump((scaler, model), f_out)
 
 print(f"Model saved to {model_file}")
 
