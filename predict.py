@@ -11,13 +11,19 @@ with open(model_file, 'rb') as f_in:
 
 app = Flask('classifier')
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     # json = Python dictionary
     trader = request.get_json()
 
+    try:
+        features = [trader[feature] for feature in scaler.feature_names_in_]
+    except KeyError as e:
+        return jsonify({'error': f'Missing feature: {e.args[0]}'}), 400
+
     # Ensure the input data is in the correct format for the scaler and model
-    X = scaler.transform([trader])
+    X = scaler.transform([features])
 
     # Get the probability of each class
     probabilities = model.predict_proba(X)[0]
@@ -27,8 +33,8 @@ def predict():
 
     # Format the response with probabilities and predicted class
     response = {
-        'predicted_class': float(y_pred),  # Cast to int for JSON serialization
-        'probabilities': probabilities  # Convert NumPy array to list for JSON serialization
+        'predicted_class': int(y_pred),  # Cast to int for JSON serialization
+        'probabilities': (probabilities).tolist()  # Convert NumPy array to list for JSON serialization
     }
 
     return jsonify(response)

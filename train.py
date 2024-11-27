@@ -83,7 +83,7 @@ X_scaled = scaler.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
 #Train the logistic Regression Model
-model = LogisticRegression(multi_class='multinomial', solver='lbfgs')
+model = LogisticRegression(multi_class='multinomial', solver='lbfgs', random_state=42)
 model.fit(X_train, y_train)
 
 #predict on the test set
