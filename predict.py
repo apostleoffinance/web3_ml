@@ -20,7 +20,7 @@ def predict():
     #scaler_instance = StandardScaler()
 
     # Ensure the input data is in the correct format for the scaler and model
-    X = scaler.transform([list(trader.values())])
+    X = scaler.transform([list(trader)])
 
     # Get the probability of each class
     probabilities = model.predict_proba(X)[0]
