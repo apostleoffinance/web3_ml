@@ -17,8 +17,10 @@ def predict():
     # json = Python dictionary
     trader = request.get_json()
 
+    #scaler_instance = StandardScaler()
+
     # Ensure the input data is in the correct format for the scaler and model
-    X = scaler.transform([trader])
+    X = scaler.transform([list(trader.values())])
 
     # Get the probability of each class
     probabilities = model.predict_proba(X)[0]
