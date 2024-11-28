@@ -17,11 +17,6 @@ def predict():
     # json = Python dictionary
     trader = request.get_json()
 
-    # try:
-    #     features = [trader[feature] for feature in scaler.feature_names_in_]
-    # except KeyError as e:
-    #     return jsonify({'error': f'Missing feature: {e.args[0]}'}), 400
-
     # Ensure the input data is in the correct format for the scaler and model
     X = scaler.transform([trader])
 
