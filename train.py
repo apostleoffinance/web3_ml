@@ -61,11 +61,10 @@ print(df_cleaned.head())
 df_cor = df_cleaned.corr(numeric_only=True)
 print(df_cor['trader_class_numeric'].sort_values(ascending=False))
 
-#numeric
-numeric = df_cleaned.select_dtypes(include=['number'])
-
-features = ['base_cumulative_return', 'portfolio_return', 
-            'daily_sharpe_ratio', 'number_of_trades', 'unique_tokens_traded']
+numeric = df_cleaned.select_dtypes(include=['number']).drop(columns=['trader_class_numeric'], errors='ignore')
+# Reset the index to ensure it is not included as a column
+features = numeric.reset_index(drop=True)
+features = [col for col in features if col in df_cleaned.columns]
 
 target = 'trader_class_numeric'
 
