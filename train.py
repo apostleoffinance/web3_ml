@@ -3,7 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import random
 import os
-import pickle
+#import pickle
+import joblib 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -91,10 +92,17 @@ y_pred = model.predict(X_test)
 # Save the Model
 # Save the trained model to a .bin file
 
-with open(model_file, 'wb') as f_out:
-    pickle.dump((scaler, model), f_out)
+# with open(model_file, 'wb') as f_out:
+#     pickle.dump((scaler, model), f_out)
+
+# print(f"Model saved to {model_file}")
+
+# Save the scaler and model
+model_file = 'logistic_regression_model.bin' 
+joblib.dump((scaler, model), model_file)
 
 print(f"Model saved to {model_file}")
+
 
 
 
