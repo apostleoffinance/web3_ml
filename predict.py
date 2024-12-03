@@ -3,7 +3,8 @@ from flask import Flask, request, jsonify
 import numpy as np
 
 # Load the scaler and model
-scaler, model = joblib.load('logistic_regression_model.bin')
+model_file = 'logistic_regression_model.bin'
+scaler, model = joblib.load(model_file)
 
 # Initialize Flask app
 app = Flask(__name__)
