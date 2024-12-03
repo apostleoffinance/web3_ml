@@ -1,42 +1,48 @@
-import pickle
-from sklearn.preprocessing import StandardScaler
-from flask import Flask
-from flask import request, jsonify
+import joblib
+from flask import Flask, request, jsonify
+import numpy as np
 
-model_file = 'logistic_regression_model.bin'
+# Load the scaler and model
+scaler, model = joblib.load('logistic_regression_model.bin')
 
-# Load the model from the .bin file
-with open(model_file, 'rb') as f_in:
-    scaler, model = pickle.load(f_in)
-
-app = Flask('classifier')
-
+# Initialize Flask app
+app = Flask(__name__)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # json = Python dictionary
-    trader = request.get_json()
+    try:
+        # Parse JSON input
+        data = request.json
+        if not isinstance(data, list):
+            return jsonify({"error": "Input data must be a list of dictionaries"}), 400
+        
+        # Convert input data into a 2D array
+        features = [
+            [
+                entry["base_cumulative_return"],
+                entry["portfolio_return"],
+                entry["daily_sharpe_ratio"],
+                entry["number_of_trades"],
+                entry["unique_tokens_traded"]
+            ]
+            for entry in data
+        ]
 
-    #scaler_instance = StandardScaler()
+        # Preprocess with scaler
+        scaled_features = scaler.transform(features)
 
-    # Ensure the input data is in the correct format for the scaler and model
-    X = scaler.transform([list(trader)])
+        # Make predictions
+        predictions = model.predict(scaled_features)
+        #probabilities = model.predict_proba(scaled_features).tolist()
 
-    # Get the probability of each class
-    probabilities = model.predict_proba(X)[0]
+        # Return predictions as JSON
+        return jsonify({
+            "predictions": predictions.tolist()
+            #"probabilities": probabilities
+        })
 
-     # Get the predicted class
-    y_pred = model.predict_proba(X)[0]
-
-    # Format the response with probabilities and predicted class
-    response = {
-        'predicted_class': int(y_pred),  # Cast to int for JSON serialization
-        'probabilities': (probabilities).tolist()  # Convert NumPy array to list for JSON serialization
-    }
-
-    return jsonify(response)
-
-
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=9696)
+    app.run(debug=True)
