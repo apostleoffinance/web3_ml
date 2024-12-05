@@ -17,7 +17,17 @@ headers = {'Content-Type': 'application/json'}
 
 response = requests.post(url, json=trader, headers=headers)
 
-print(response.json())
+prediction = response.json().get('predictions')[0]
+
+# Categorize the trader based on the prediction value
+if prediction == 2:
+    trader_category = 'Good Trader'
+elif prediction == 1:
+    trader_category = 'Bad Trader'
+else:
+    trader_category = 'Average Trader'
+
+print(f"Trader Category: {trader_category}")
 
 
 
