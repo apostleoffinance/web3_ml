@@ -3,5 +3,4 @@ scikit-learn
 flask
 gunicorn
 joblib
-awsebcli
 
