@@ -7,7 +7,6 @@ model_file = 'logistic_regression_model.bin'
 scaler, model = joblib.load(model_file)
 
 # Initialize Flask app
-#app = Flask(__name__)
 app = Flask('trader_class')
 
 @app.route('/predict', methods=['POST'])
@@ -35,12 +34,22 @@ def predict():
 
         # Make predictions
         predictions = model.predict(scaled_features)
-        #probabilities = model.predict_proba(scaled_features).tolist()
 
-        # Return predictions as JSON
+        # Categorize each trader based on prediction values
+        categories = []
+        for prediction in predictions:
+            if prediction == 2:
+                trader_category = 'Good Trader'
+            elif prediction == 1:
+                trader_category = 'Bad Trader'
+            else:
+                trader_category = 'Average Trader'
+            categories.append(trader_category)
+
+        # Return predictions and categories as JSON
         return jsonify({
-            "predictions": predictions.tolist()
-            #"probabilities": probabilities
+            "predictions": predictions.tolist(),
+            "categories": categories
         })
 
     except Exception as e:
