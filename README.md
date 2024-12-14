@@ -1,4 +1,3 @@
-
 Crypto Trader Classifier with Logistic Regression
 Overview
 Welcome to the repository for our project on classifying cryptocurrency traders using logistic regression. This tool aims to categorize traders into three groups: Good Trader, Average Trader, and Bad Trader, based on their trading performance metrics.
@@ -39,11 +38,11 @@ pip install -r requirements.txt
 Run the Model:
 Locally:
 bash
-python src/train.py
+python src/train_model.py
 With Docker:
 bash
-docker build -t classifier-test .
-docker run -it -p 8000:8000 classifier-test
+docker build -t crypto-trader-classifier .
+docker run -p 5000:5000 crypto-trader-classifier
 API Usage: After running the Flask server, you can make POST requests to /predict with trader data in JSON format to get classifications.
 
 Applications
